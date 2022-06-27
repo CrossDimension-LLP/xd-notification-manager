@@ -1,1 +1,23 @@
 
+spring:
+  application:
+    name: notification-manager
+
+  data:
+    mongodb:
+      uri: mongodb+srv://admin:admin@cluster0.y7aemnv.mongodb.net/notification_manager?retryWrites=true&w=majority
+      database: notification_manager
+
+messaging:
+  twilio:
+    accountSid: ACaabaf7514b819edceeddecbe5975a155
+    authToken: e1a42725e782a28545cbeb1c7ec34f87
+    fromNumber: +19207988494
+
+
+server:
+  servlet:
+    context-path: /notification/v1
+  http2:
+    enabled: true
+  port: 8080
