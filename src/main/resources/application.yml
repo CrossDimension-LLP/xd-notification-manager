@@ -5,8 +5,8 @@ spring:
 
   data:
     mongodb:
-      uri: mongodb+srv://admin:admin@cluster0.y7aemnv.mongodb.net/notification_manager?retryWrites=true&w=majority
-      database: notification_manager
+      database: soshealth
+      uri: mongodb://soshealth:oUoGMmS5r4gPGltAoiT10bJsCnEsNrTQZZNM4veYjjtVSAsrbmlDXuZTewRdCKreWZdIZ79iglWttqR6gUArMw==@soshealth.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&replicaSet=globaldb&maxIdleTimeMS=120000&appName=@soshealth@
 
 messaging:
   twilio:
@@ -20,4 +20,4 @@ server:
     context-path: /notification/v1
   http2:
     enabled: true
-  port: 8080
+  port: 443
