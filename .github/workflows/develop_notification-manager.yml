@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'notification-manager'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2B61568A6E824406B07FF04A9398B437 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_F66D42FB17974F98B779F021F3083736 }}
           package: '*.jar'
