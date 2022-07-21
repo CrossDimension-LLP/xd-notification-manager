@@ -2,6 +2,7 @@ package in.crossdimension.notificationmanager.service;
 
 
 import in.crossdimension.notificationmanager.entity.Email;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.mail.*;
@@ -11,6 +12,7 @@ import java.util.Date;
 import java.util.Properties;
 
 @Service
+@Slf4j
 public class EmailService {
     public void sendmail(Email emailRequest) throws AddressException, MessagingException, IOException {
         Properties props = new Properties();
@@ -34,7 +36,7 @@ public class EmailService {
 
         MimeBodyPart messageBodyPart = new MimeBodyPart();
         messageBodyPart.setContent(emailRequest.getMailBody(), "text/html");
-
+        log.debug("Message Body for the Email Service {}", msg);
         Transport.send(msg);
     }
 }

@@ -5,11 +5,13 @@ import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 import in.crossdimension.notificationmanager.entity.SMS;
 import in.crossdimension.notificationmanager.repository.IMessageRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
+@Slf4j
 public class MessageService {
 
     //Twillio Account Password "CrossDimensionLLP&2022"
@@ -40,6 +42,7 @@ public class MessageService {
         sms.setNotificationId(sms.getTo());
         sms.setMessage(otp);
         sms.setTimeStamp(timestamp);
+        log.debug("Saving the OTP details {}", sms);
         messageRepository.save(sms);
     }
     private String getRandomNumber(int max, int min) {

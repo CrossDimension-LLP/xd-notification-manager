@@ -15,6 +15,7 @@ messaging:
     fromNumber: +19207988494
 
 
+
 server:
   servlet:
     context-path: /notification/v1
