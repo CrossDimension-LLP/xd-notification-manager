@@ -67,7 +67,9 @@ public class NotificationController {
 
     private String getTimeStamp() {
         LocalDateTime currentTime = LocalDateTime.now();
+        System.out.println("Current time according to local - "+ DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(currentTime));
         ZonedDateTime zonedIST = currentTime.atZone(ZoneId.of("Asia/Kolkata"));
+        System.out.println("Zoned Time  - "+ DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(zonedIST));
         zonedIST = zonedIST.plusMinutes(3);
         return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(zonedIST);
     }
