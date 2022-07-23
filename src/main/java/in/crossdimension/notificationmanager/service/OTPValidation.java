@@ -2,6 +2,7 @@ package in.crossdimension.notificationmanager.service;
 
 import static in.crossdimension.notificationmanager.config.NotificationConstants.*;
 import in.crossdimension.notificationmanager.entity.IncomingSMS;
+import in.crossdimension.notificationmanager.entity.NotificationResponder;
 import in.crossdimension.notificationmanager.entity.SMS;
 import in.crossdimension.notificationmanager.repository.IMessageRepository;
 import org.joda.time.LocalDateTime;
@@ -18,15 +19,15 @@ public class OTPValidation {
     @Autowired
     private IMessageRepository messageRepository;
 
-    public String isOtpValid(IncomingSMS incomingSMS) {
+    public NotificationResponder isOtpValid(IncomingSMS incomingSMS) {
         Optional<SMS> sms = messageRepository.findById(incomingSMS.getFrom());
         if (sms.isPresent() && sms.get().getMessage().equalsIgnoreCase(incomingSMS.getOtp())) {
             if (getTimeStampValidation(sms.get().getTimeStamp(), incomingSMS.getIncomingTimestamp())) {
-                return VALID;
+                return NotificationResponder.builder().otpValid(true).build();
             }
-            return EXPIRED;
+            return NotificationResponder.builder().otpValid(false).build();
         }
-        return INVALID;
+        return NotificationResponder.builder().otpValid(false).build();
     }
 
     private boolean getTimeStampValidation(String storedTimeStamp, String inComingTimeStamp) {

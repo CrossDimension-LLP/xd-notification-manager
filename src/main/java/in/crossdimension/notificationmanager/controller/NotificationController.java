@@ -3,6 +3,7 @@ package in.crossdimension.notificationmanager.controller;
 import com.twilio.exception.ApiException;
 import in.crossdimension.notificationmanager.entity.Email;
 import in.crossdimension.notificationmanager.entity.IncomingSMS;
+import in.crossdimension.notificationmanager.entity.NotificationResponder;
 import in.crossdimension.notificationmanager.entity.SMS;
 import in.crossdimension.notificationmanager.service.EmailService;
 import in.crossdimension.notificationmanager.service.MessageService;
@@ -36,7 +37,7 @@ public class NotificationController {
 
     @RequestMapping(value = "/sms", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String smsSubmit(@RequestBody SMS sms) {
+    public NotificationResponder smsSubmit(@RequestBody SMS sms) {
         String timeStamp = getTimeStamp();
         try{
             service.send(sms, timeStamp);
@@ -47,7 +48,7 @@ public class NotificationController {
             throw e;
         }
         webSocket.convertAndSend(TOPIC_DESTINATION, timeStamp + ": SMS has been sent!: "+sms.getTo());
-        return "Code is valid till " + timeStamp;
+        return NotificationResponder.builder().validityTimestamp(timeStamp).otpValid(true).build();
     }
 
     @PostMapping("/email")
@@ -58,13 +59,13 @@ public class NotificationController {
 
 
     @PostMapping("/validation")
-    public String otpValidate(@RequestBody IncomingSMS incomingSMS){
+    public NotificationResponder otpValidate(@RequestBody IncomingSMS incomingSMS){
         return otpValidation.isOtpValid(incomingSMS);
     }
 
     private String getTimeStamp() {
         LocalDateTime currentTime = LocalDateTime.now();
-        currentTime = currentTime.plusMinutes(1);
+        currentTime = currentTime.plusMinutes(3);
         return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(currentTime);
     }
 }
