@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 @RestController
@@ -66,11 +64,10 @@ public class NotificationController {
     }
 
     private String getTimeStamp() {
-        LocalDateTime currentTime = LocalDateTime.now();
+        ZoneId zoneId = ZoneId.of( "Asia/Kolkata" );
+        LocalDateTime currentTime = LocalDateTime.now(zoneId);
         System.out.println("Current time according to local - "+ DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(currentTime));
-        ZonedDateTime zonedIST = currentTime.atZone(ZoneId.of("Asia/Kolkata"));
-        System.out.println("Zoned Time  - "+ DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(zonedIST));
-        zonedIST = zonedIST.plusMinutes(3);
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(zonedIST);
+        currentTime = currentTime.plusMinutes(3);
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(currentTime);
     }
 }
